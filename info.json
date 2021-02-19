@@ -1,0 +1,12 @@
+{
+  "commit": {
+    "commit": "56e3ba41b2069f47500083d2bb2fb44a4620b125",
+    "author": "Nolan Nichols <nnichols@mazetx.com>",
+    "time": "2021-02-19 17:01:07",
+    "files": 1,
+    "merge": false,
+    "message": "rf: cleanup duplicated code lines\n"
+  },
+  "remote": "https://github.com/ropensci/ckanr",
+  "pkg": "ckanr"
+}
