@@ -1,0 +1,12 @@
+{
+  "commit": {
+    "commit": "f45afeaf9a41b35f38fa96054e97ca446d73c90c",
+    "author": "Francisco Júnior <fjunior.alves.oliveira@gmail.com>",
+    "time": "2023-03-17 19:38:36",
+    "files": 2,
+    "merge": false,
+    "message": "Increment version number to 0.7.0.9000\n"
+  },
+  "repo": "https://github.com/ropensci/ckanr",
+  "pkg": "ckanr"
+}
