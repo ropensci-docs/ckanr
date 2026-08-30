@@ -1,0 +1,584 @@
+# ckanr
+
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![R-check](https://github.com/ropensci/ckanr/actions/workflows/R-check.yaml/badge.svg)](https://github.com/ropensci/ckanr/actions/workflows/R-check.yaml)
+[![rstudio mirror
+downloads](https://cranlogs.r-pkg.org/badges/ckanr?color=FAB657)](https://github.com/r-hub/cranlogs.app)
+[![cran
+version](https://www.r-pkg.org/badges/version/ckanr)](https://cran.r-project.org/package=ckanr)
+[![codecov](https://codecov.io/gh/ropensci/ckanr/branch/main/graph/badge.svg?token=96K7ZIOmCB)](https://codecov.io/gh/ropensci/ckanr)
+
+`ckanr` is an R client package for the [CKAN API](https://ckan.org/),
+enabling R users to interact with CKAN data portals for reading,
+writing, and managing datasets. The package wraps the entire CKAN REST
+API with R functions organized by resource type (packages, resources,
+organizations, groups, users, tags).
+
+## Description
+
+CKAN is an open-source DMS (data management system) for powering data
+hubs and data portals. CKAN makes it easy to publish, share and use
+data. It powers hundreds of data portals worldwide.
+
+`ckanr` allows users to interact with those CKAN websites to create,
+modify, and manage datasets, as well as search and download pre-existing
+data, and then to proceed using in R for data analysis
+(stats/plotting/etc.). It is meant to be as general as possible,
+allowing you to work with any CKAN instance.
+
+`ckanr` works for and is tested against - the [CKAN v2.11
+API](https://docs.ckan.org/en/2.11/api/), - the [CKAN v2.10
+API](https://docs.ckan.org/en/2.10/api/), and - the [CKAN v2.9
+API](https://docs.ckan.org/en/2.9/api/).
+
+`ckanr` may work with older and newer CKAN versions.
+
+Get started: <https://docs.ropensci.org/ckanr/>
+
+## Installation
+
+Stable CRAN version
+
+``` r
+
+install.packages("ckanr")
+```
+
+Development version
+
+``` r
+
+# From source
+install.packages("remotes")
+remotes::install_github("ropensci/ckanr")
+# Binary via the rOpenSci universe
+options(
+  repos = c(
+    ropensci = "https://ropensci.r-universe.dev",
+    CRAN = "https://cloud.r-project.org"
+  )
+)
+install.packages("ruODK")
+```
+
+``` r
+
+library("ckanr")
+```
+
+Note: the default base CKAN URL is set to <https://demo.ckan.org/>
+Functions requiring write permissions in CKAN additionally require a
+privileged CKAN API key. You can change this using
+[`ckanr_setup()`](https://docs.ropensci.org/ckanr/reference/ckanr_setup.md),
+or change the URL using the `url` parameter in each function call. To
+set one or both, run:
+
+``` r
+
+ckanr_setup() # restores default CKAN url to https://demo.ckan.org/
+ckanr_setup(url = "https://demo.ckan.org/")
+ckanr_setup(url = "https://demo.ckan.org/", key = "my-ckan-api-key")
+```
+
+## ckanr package API
+
+There are a suite of CKAN things (package, resource, etc.) that each
+have a set of functions in this package. The functions for each CKAN
+thing have an S3 class that is returned from most functions, and can be
+passed to most other functions (this also facilitates piping). The
+following is a list of the function groups for certain CKAN things, with
+the prefix for the functions that work with that thing, and the name of
+the S3 class:
+
+- Packages (aka packages) - `package_*()` - `ckan_package`
+- Resources - `resource_*()` - `ckan_resource`
+- Related - `related_*()` - `ckan_related`
+- Users - `user_*()` - `ckan_user`
+- Groups - `group_*()` - `ckan_group`
+- Tags - `tag_*()` - `ckan_tag`
+- Organizations - `organization_*()` - `ckan_organization`
+
+The S3 class objects all look very similar; for example:
+
+``` r
+<CKAN Resource> 8abc92ad-7379-4fb8-bba0-549f38a26ddb
+  Name: Data From Digital Portal
+  Description:
+  Creator/Modified: 2015-08-18T19:20:59.732601 / 2015-08-18T19:20:59.657943
+  Size:
+  Format: CSV
+```
+
+All classes state the type of object, have the ID to the right of the
+type, then have a varying set of key-value fields deemed important. This
+printed object is just a summary of an R list, so you can index to
+specific values (e.g., `result$description`). If you feel there are
+important fields left out of these printed summaries, let us know.
+
+> note: Many examples are given in brief for readme brevity
+
+## Contributors
+
+(alphabetical)
+
+- Florian Mayer
+- Francisco Alves
+- Hanna Böhner
+- Imanuel Costigan
+- Scott Chamberlain (original creator)
+- Sharla Gelfand
+- Wush Wu
+
+## Meta
+
+- Please [report any issues or
+  bugs](https://github.com/ropensci/ckanr/issues).
+- License: MIT
+- Get citation information for `ckanr` in R via
+  `citation(package = 'ckanr')`
+- Please note that this package is released with a [Contributor Code of
+  Conduct](https://ropensci.org/code-of-conduct/). By contributing to
+  this project, you agree to abide by its terms.
+- If you want to contribute to the package development, please see the
+  [contributing
+  guide](https://docs.ropensci.org/ckanr/CONTRIBUTING.html).
+
+# Package index
+
+## All functions
+
+- [`group_activity_list()`](https://docs.ropensci.org/ckanr/reference/activity_helpers.md)
+  [`organization_activity_list()`](https://docs.ropensci.org/ckanr/reference/activity_helpers.md)
+  [`recently_changed_packages_activity_list()`](https://docs.ropensci.org/ckanr/reference/activity_helpers.md)
+  [`dashboard_new_activities_count()`](https://docs.ropensci.org/ckanr/reference/activity_helpers.md)
+  [`dashboard_mark_activities_old()`](https://docs.ropensci.org/ckanr/reference/activity_helpers.md)
+  [`activity_show()`](https://docs.ropensci.org/ckanr/reference/activity_helpers.md)
+  [`activity_data_show()`](https://docs.ropensci.org/ckanr/reference/activity_helpers.md)
+  [`activity_diff()`](https://docs.ropensci.org/ckanr/reference/activity_helpers.md)
+  [`activity_create()`](https://docs.ropensci.org/ckanr/reference/activity_helpers.md)
+  [`send_email_notifications()`](https://docs.ropensci.org/ckanr/reference/activity_helpers.md)
+  : Activity stream helpers
+
+- [`api_token_list()`](https://docs.ropensci.org/ckanr/reference/api_tokens.md)
+  [`api_token_create()`](https://docs.ropensci.org/ckanr/reference/api_tokens.md)
+  [`api_token_revoke()`](https://docs.ropensci.org/ckanr/reference/api_tokens.md)
+  : API token helpers
+
+- [`as.ckan_group()`](https://docs.ropensci.org/ckanr/reference/as.ckan_group.md)
+  [`is.ckan_group()`](https://docs.ropensci.org/ckanr/reference/as.ckan_group.md)
+  : ckan_group class helpers
+
+- [`as.ckan_organization()`](https://docs.ropensci.org/ckanr/reference/as.ckan_organization.md)
+  [`is.ckan_organization()`](https://docs.ropensci.org/ckanr/reference/as.ckan_organization.md)
+  : ckan_organization class helpers
+
+- [`as.ckan_package()`](https://docs.ropensci.org/ckanr/reference/as.ckan_package.md)
+  [`is.ckan_package()`](https://docs.ropensci.org/ckanr/reference/as.ckan_package.md)
+  : ckan_package class helpers
+
+- [`as.ckan_related()`](https://docs.ropensci.org/ckanr/reference/as.ckan_related.md)
+  [`is.ckan_related()`](https://docs.ropensci.org/ckanr/reference/as.ckan_related.md)
+  : ckan_related class helpers
+
+- [`as.ckan_resource()`](https://docs.ropensci.org/ckanr/reference/as.ckan_resource.md)
+  [`is.ckan_resource()`](https://docs.ropensci.org/ckanr/reference/as.ckan_resource.md)
+  : ckan_resource class helpers
+
+- [`as.ckan_resource_view()`](https://docs.ropensci.org/ckanr/reference/as.ckan_resource_view.md)
+  [`is.ckan_resource_view()`](https://docs.ropensci.org/ckanr/reference/as.ckan_resource_view.md)
+  : ckan_resource_view class helpers
+
+- [`as.ckan_tag()`](https://docs.ropensci.org/ckanr/reference/as.ckan_tag.md)
+  [`is.ckan_tag()`](https://docs.ropensci.org/ckanr/reference/as.ckan_tag.md)
+  : ckan_tag class helpers
+
+- [`as.ckan_user()`](https://docs.ropensci.org/ckanr/reference/as.ckan_user.md)
+  [`is.ckan_user()`](https://docs.ropensci.org/ckanr/reference/as.ckan_user.md)
+  : ckan_user class helpers
+
+- [`as.ckan_vocabulary()`](https://docs.ropensci.org/ckanr/reference/as.ckan_vocabulary.md)
+  [`is.ckan_vocabulary()`](https://docs.ropensci.org/ckanr/reference/as.ckan_vocabulary.md)
+  : ckan_vocabulary class helpers
+
+- [`changes()`](https://docs.ropensci.org/ckanr/reference/changes.md) :
+  Get an activity stream of recently changed datasets on a site.
+
+- [`ckan_action()`](https://docs.ropensci.org/ckanr/reference/ckan_action.md)
+  : Generic action function
+
+- [`ckan_classes`](https://docs.ropensci.org/ckanr/reference/ckan_classes.md)
+  : ckanr S3 classes
+
+- [`ckan_fetch()`](https://docs.ropensci.org/ckanr/reference/ckan_fetch.md)
+  : Download a file
+
+- [`ckan_info()`](https://docs.ropensci.org/ckanr/reference/ckan_info.md)
+  [`ckan_version()`](https://docs.ropensci.org/ckanr/reference/ckan_info.md)
+  : Get information on a CKAN server
+
+- [`ckanr-deprecated`](https://docs.ropensci.org/ckanr/reference/ckanr-deprecated.md)
+  :
+
+  Deprecated functions in ckanr
+
+- [`ckanr-package`](https://docs.ropensci.org/ckanr/reference/ckanr-package.md)
+  [`ckanr`](https://docs.ropensci.org/ckanr/reference/ckanr-package.md)
+  : R client for the CKAN API
+
+- [`ckanr_settings()`](https://docs.ropensci.org/ckanr/reference/ckanr_settings.md)
+  [`get_default_url()`](https://docs.ropensci.org/ckanr/reference/ckanr_settings.md)
+  [`get_default_key()`](https://docs.ropensci.org/ckanr/reference/ckanr_settings.md)
+  [`get_test_url()`](https://docs.ropensci.org/ckanr/reference/ckanr_settings.md)
+  [`get_test_key()`](https://docs.ropensci.org/ckanr/reference/ckanr_settings.md)
+  [`get_test_did()`](https://docs.ropensci.org/ckanr/reference/ckanr_settings.md)
+  [`get_test_rid()`](https://docs.ropensci.org/ckanr/reference/ckanr_settings.md)
+  [`get_test_gid()`](https://docs.ropensci.org/ckanr/reference/ckanr_settings.md)
+  [`get_test_oid()`](https://docs.ropensci.org/ckanr/reference/ckanr_settings.md)
+  [`get_test_behaviour()`](https://docs.ropensci.org/ckanr/reference/ckanr_settings.md)
+  : Get or set ckanr CKAN settings
+
+- [`ckanr_setup()`](https://docs.ropensci.org/ckanr/reference/ckanr_setup.md)
+  : Configure default CKAN settings
+
+- [`config_option_list()`](https://docs.ropensci.org/ckanr/reference/config_options.md)
+  [`config_option_show()`](https://docs.ropensci.org/ckanr/reference/config_options.md)
+  [`config_option_update()`](https://docs.ropensci.org/ckanr/reference/config_options.md)
+  : Runtime configuration helpers
+
+- [`dashboard_activity_list()`](https://docs.ropensci.org/ckanr/reference/dashboard_activity_list.md)
+  : Authorized user's dashboard activity stream
+
+- [`dashboard_count()`](https://docs.ropensci.org/ckanr/reference/dashboard_count.md)
+  : Number of new activities of an authorized user
+
+- [`dataset_purge()`](https://docs.ropensci.org/ckanr/reference/dataset_purge.md)
+  : Permanently purge a dataset
+
+- [`status_show()`](https://docs.ropensci.org/ckanr/reference/diagnostics.md)
+  [`help_show()`](https://docs.ropensci.org/ckanr/reference/diagnostics.md)
+  : Diagnostics helpers
+
+- [`ds_create()`](https://docs.ropensci.org/ckanr/reference/ds_create.md)
+  : Add a new table to a datastore
+
+- [`ds_create_dataset()`](https://docs.ropensci.org/ckanr/reference/ds_create_dataset.md)
+  : Datastore - create a new resource on an existing dataset
+
+- [`ds_search()`](https://docs.ropensci.org/ckanr/reference/ds_search.md)
+  : Datastore - search or get a dataset from CKAN datastore
+
+- [`ds_search_sql()`](https://docs.ropensci.org/ckanr/reference/ds_search_sql.md)
+  : Datastore - search or get a dataset from CKAN datastore
+
+- [`dataset_follow()`](https://docs.ropensci.org/ckanr/reference/follow_objects.md)
+  [`dataset_unfollow()`](https://docs.ropensci.org/ckanr/reference/follow_objects.md)
+  [`dataset_am_following()`](https://docs.ropensci.org/ckanr/reference/follow_objects.md)
+  [`group_follow()`](https://docs.ropensci.org/ckanr/reference/follow_objects.md)
+  [`group_unfollow()`](https://docs.ropensci.org/ckanr/reference/follow_objects.md)
+  [`group_am_following()`](https://docs.ropensci.org/ckanr/reference/follow_objects.md)
+  : Follow and unfollow CKAN datasets or groups
+
+- [`follow_user()`](https://docs.ropensci.org/ckanr/reference/follow_users.md)
+  [`unfollow_user()`](https://docs.ropensci.org/ckanr/reference/follow_users.md)
+  [`am_following_user()`](https://docs.ropensci.org/ckanr/reference/follow_users.md)
+  : Follow or unfollow users
+
+- [`followee_count()`](https://docs.ropensci.org/ckanr/reference/followee_counts.md)
+  [`user_followee_count()`](https://docs.ropensci.org/ckanr/reference/followee_counts.md)
+  [`dataset_followee_count()`](https://docs.ropensci.org/ckanr/reference/followee_counts.md)
+  [`group_followee_count()`](https://docs.ropensci.org/ckanr/reference/followee_counts.md)
+  : Followee counts for CKAN users
+
+- [`followee_list()`](https://docs.ropensci.org/ckanr/reference/followee_lists.md)
+  [`user_followee_list()`](https://docs.ropensci.org/ckanr/reference/followee_lists.md)
+  [`dataset_followee_list()`](https://docs.ropensci.org/ckanr/reference/followee_lists.md)
+  [`group_followee_list()`](https://docs.ropensci.org/ckanr/reference/followee_lists.md)
+  : Followee lists for CKAN users
+
+- [`dataset_follower_count()`](https://docs.ropensci.org/ckanr/reference/follower_counts.md)
+  [`group_follower_count()`](https://docs.ropensci.org/ckanr/reference/follower_counts.md)
+  [`user_follower_count()`](https://docs.ropensci.org/ckanr/reference/follower_counts.md)
+  : Follower counts for CKAN objects
+
+- [`dataset_follower_list()`](https://docs.ropensci.org/ckanr/reference/follower_lists.md)
+  [`group_follower_list()`](https://docs.ropensci.org/ckanr/reference/follower_lists.md)
+  [`user_follower_list()`](https://docs.ropensci.org/ckanr/reference/follower_lists.md)
+  : Follower lists for CKAN objects
+
+- [`group_create()`](https://docs.ropensci.org/ckanr/reference/group_create.md)
+  : Create a group
+
+- [`group_delete()`](https://docs.ropensci.org/ckanr/reference/group_delete.md)
+  : Delete a group
+
+- [`group_list()`](https://docs.ropensci.org/ckanr/reference/group_list.md)
+  : List groups.
+
+- [`group_list_authz()`](https://docs.ropensci.org/ckanr/reference/group_list_authz.md)
+  : List groups the current user can edit
+
+- [`group_member_create()`](https://docs.ropensci.org/ckanr/reference/group_member_create.md)
+  : Make a user a member of a group
+
+- [`group_member_delete()`](https://docs.ropensci.org/ckanr/reference/group_member_delete.md)
+  : Remove a user from a group
+
+- [`group_patch()`](https://docs.ropensci.org/ckanr/reference/group_patch.md)
+  : Update a group's metadata
+
+- [`group_show()`](https://docs.ropensci.org/ckanr/reference/group_show.md)
+  : Show a package
+
+- [`group_update()`](https://docs.ropensci.org/ckanr/reference/group_update.md)
+  : Update a group
+
+- [`job_list()`](https://docs.ropensci.org/ckanr/reference/job_queue.md)
+  [`job_show()`](https://docs.ropensci.org/ckanr/reference/job_queue.md)
+  [`job_clear()`](https://docs.ropensci.org/ckanr/reference/job_queue.md)
+  [`job_cancel()`](https://docs.ropensci.org/ckanr/reference/job_queue.md)
+  : Background job helpers
+
+- [`license_list()`](https://docs.ropensci.org/ckanr/reference/license_list.md)
+  : Return the list of licenses available for datasets on the site.
+
+- [`member_create()`](https://docs.ropensci.org/ckanr/reference/member_create.md)
+  : Create or update a membership via member\_\* endpoints
+
+- [`member_delete()`](https://docs.ropensci.org/ckanr/reference/member_delete.md)
+  : Remove a membership via member\_\* endpoints
+
+- [`member_list()`](https://docs.ropensci.org/ckanr/reference/member_list.md)
+  : List members for a group or organization
+
+- [`member_roles_list()`](https://docs.ropensci.org/ckanr/reference/member_roles_list.md)
+  : Report available member roles
+
+- [`membership`](https://docs.ropensci.org/ckanr/reference/membership.md)
+  : Membership helpers
+
+- [`organization_create()`](https://docs.ropensci.org/ckanr/reference/organization_create.md)
+  : Create an organization
+
+- [`organization_delete()`](https://docs.ropensci.org/ckanr/reference/organization_delete.md)
+  : Delete an organization
+
+- [`organization_list()`](https://docs.ropensci.org/ckanr/reference/organization_list.md)
+  : List organization
+
+- [`organization_list_for_user()`](https://docs.ropensci.org/ckanr/reference/organization_list_for_user.md)
+  : List organizations a user can act on
+
+- [`organization_member_create()`](https://docs.ropensci.org/ckanr/reference/organization_member_create.md)
+  : Make a user a member of an organization
+
+- [`organization_member_delete()`](https://docs.ropensci.org/ckanr/reference/organization_member_delete.md)
+  : Remove a user from an organization
+
+- [`organization_purge()`](https://docs.ropensci.org/ckanr/reference/organization_purge.md)
+  : Purge an organization
+
+- [`organization_show()`](https://docs.ropensci.org/ckanr/reference/organization_show.md)
+  : Show an organization
+
+- [`package_activity_list()`](https://docs.ropensci.org/ckanr/reference/package_activity_list.md)
+  : Return a list of the package's activity
+
+- [`package_collaborator_create()`](https://docs.ropensci.org/ckanr/reference/package_collaborator_create.md)
+  : Create or update a dataset collaborator
+
+- [`package_collaborator_delete()`](https://docs.ropensci.org/ckanr/reference/package_collaborator_delete.md)
+  : Delete a dataset collaborator
+
+- [`package_collaborator_list()`](https://docs.ropensci.org/ckanr/reference/package_collaborator_list.md)
+  : List collaborators for a dataset
+
+- [`package_collaborator_list_for_user()`](https://docs.ropensci.org/ckanr/reference/package_collaborator_list_for_user.md)
+  : List packages a user collaborates on
+
+- [`package_collaborators`](https://docs.ropensci.org/ckanr/reference/package_collaborators.md)
+  : Package collaborator utilities
+
+- [`package_create()`](https://docs.ropensci.org/ckanr/reference/package_create.md)
+  : Create a package
+
+- [`package_create_default_resource_views()`](https://docs.ropensci.org/ckanr/reference/package_create_default_resource_views.md)
+  : Create default views for all resources in a dataset
+
+- [`package_dataset_extras`](https://docs.ropensci.org/ckanr/reference/package_dataset_extras.md)
+  : Dataset maintenance helpers
+
+- [`package_delete()`](https://docs.ropensci.org/ckanr/reference/package_delete.md)
+  : Delete a package
+
+- [`package_list()`](https://docs.ropensci.org/ckanr/reference/package_list.md)
+  : List datasets.
+
+- [`package_list_current()`](https://docs.ropensci.org/ckanr/reference/package_list_current.md)
+  : List current packages with resources.
+
+- [`package_owner_org_update()`](https://docs.ropensci.org/ckanr/reference/package_owner_org_update.md)
+  : Move a dataset to another organization
+
+- [`package_patch()`](https://docs.ropensci.org/ckanr/reference/package_patch.md)
+  : Update a package's metadata
+
+- [`package_relationship_create()`](https://docs.ropensci.org/ckanr/reference/package_relationship_create.md)
+  : Create a dataset relationship
+
+- [`package_relationship_delete()`](https://docs.ropensci.org/ckanr/reference/package_relationship_delete.md)
+  : Delete a dataset relationship
+
+- [`package_relationship_update()`](https://docs.ropensci.org/ckanr/reference/package_relationship_update.md)
+  : Update an existing dataset relationship
+
+- [`package_relationships`](https://docs.ropensci.org/ckanr/reference/package_relationships.md)
+  : Package relationship helpers
+
+- [`package_relationships_list()`](https://docs.ropensci.org/ckanr/reference/package_relationships_list.md)
+  : List relationships for a dataset
+
+- [`package_resource_reorder()`](https://docs.ropensci.org/ckanr/reference/package_resource_reorder.md)
+  : Reorder resources for a dataset
+
+- [`package_revise()`](https://docs.ropensci.org/ckanr/reference/package_revise.md)
+  : Revise a dataset using match/filter/update semantics
+
+- [`package_revision_list()`](https://docs.ropensci.org/ckanr/reference/package_revision_list.md)
+  : Return a dataset (package's) revisions as a list of dictionaries.
+
+- [`package_search()`](https://docs.ropensci.org/ckanr/reference/package_search.md)
+  : Search for packages.
+
+- [`package_show()`](https://docs.ropensci.org/ckanr/reference/package_show.md)
+  : Show a package.
+
+- [`package_update()`](https://docs.ropensci.org/ckanr/reference/package_update.md)
+  : Update a package
+
+- [`ping()`](https://docs.ropensci.org/ckanr/reference/ping.md) : Ping a
+  CKAN server to test that it's up or down.
+
+- [`related_create()`](https://docs.ropensci.org/ckanr/reference/related_create.md)
+  : Create a related item
+
+- [`related_delete()`](https://docs.ropensci.org/ckanr/reference/related_delete.md)
+  : Delete a related item.
+
+- [`related_list()`](https://docs.ropensci.org/ckanr/reference/related_list.md)
+  : List related items
+
+- [`related_show()`](https://docs.ropensci.org/ckanr/reference/related_show.md)
+  : Show a related item
+
+- [`resource_create()`](https://docs.ropensci.org/ckanr/reference/resource_create.md)
+  : Create a resource
+
+- [`resource_create_default_resource_views()`](https://docs.ropensci.org/ckanr/reference/resource_create_default_resource_views.md)
+  : Create default views for a single resource
+
+- [`resource_delete()`](https://docs.ropensci.org/ckanr/reference/resource_delete.md)
+  : Delete a resource.
+
+- [`resource_patch()`](https://docs.ropensci.org/ckanr/reference/resource_patch.md)
+  : Update a resource's metadata
+
+- [`resource_search()`](https://docs.ropensci.org/ckanr/reference/resource_search.md)
+  : Search for resources.
+
+- [`resource_show()`](https://docs.ropensci.org/ckanr/reference/resource_show.md)
+  : Show a resource.
+
+- [`resource_update()`](https://docs.ropensci.org/ckanr/reference/resource_update.md)
+  : Update a resource
+
+- [`resource_view_clear()`](https://docs.ropensci.org/ckanr/reference/resource_view_clear.md)
+  : Clear resource views
+
+- [`resource_view_create()`](https://docs.ropensci.org/ckanr/reference/resource_view_create.md)
+  : Create a resource view
+
+- [`resource_view_delete()`](https://docs.ropensci.org/ckanr/reference/resource_view_delete.md)
+  : Delete a resource view
+
+- [`resource_view_list()`](https://docs.ropensci.org/ckanr/reference/resource_view_list.md)
+  : List resource views for a resource
+
+- [`resource_view_reorder()`](https://docs.ropensci.org/ckanr/reference/resource_view_reorder.md)
+  : Reorder resource views
+
+- [`resource_view_show()`](https://docs.ropensci.org/ckanr/reference/resource_view_show.md)
+  : Show a resource view
+
+- [`resource_view_update()`](https://docs.ropensci.org/ckanr/reference/resource_view_update.md)
+  : Update an existing resource view
+
+- [`resource_views`](https://docs.ropensci.org/ckanr/reference/resource_views.md)
+  : Resource view management
+
+- [`revision_list()`](https://docs.ropensci.org/ckanr/reference/revision_list.md)
+  : Return a list of the IDs of the site's revisions.
+
+- [`servers()`](https://docs.ropensci.org/ckanr/reference/servers.md) :
+  CKAN server URLS and other info
+
+- [`src_ckan()`](https://docs.ropensci.org/ckanr/reference/src_ckan.md)
+  : Connect to CKAN with dplyr
+
+- [`tag_autocomplete()`](https://docs.ropensci.org/ckanr/reference/tag_autocomplete.md)
+  : Autocomplete tag names.
+
+- [`tag_create()`](https://docs.ropensci.org/ckanr/reference/tag_create.md)
+  : Create a tag
+
+- [`tag_list()`](https://docs.ropensci.org/ckanr/reference/tag_list.md)
+  : List tags.
+
+- [`tag_search()`](https://docs.ropensci.org/ckanr/reference/tag_search.md)
+  : Search tags.
+
+- [`tag_show()`](https://docs.ropensci.org/ckanr/reference/tag_show.md)
+  : Show a tag.
+
+- [`task_status_show()`](https://docs.ropensci.org/ckanr/reference/task_status.md)
+  [`task_status_update()`](https://docs.ropensci.org/ckanr/reference/task_status.md)
+  [`task_status_update_many()`](https://docs.ropensci.org/ckanr/reference/task_status.md)
+  [`task_status_delete()`](https://docs.ropensci.org/ckanr/reference/task_status.md)
+  : CKAN task status maintenance
+
+- [`term_translation_show()`](https://docs.ropensci.org/ckanr/reference/term_translation.md)
+  [`term_translation_update()`](https://docs.ropensci.org/ckanr/reference/term_translation.md)
+  [`term_translation_update_many()`](https://docs.ropensci.org/ckanr/reference/term_translation.md)
+  : Term translation helpers
+
+- [`user_activity_list()`](https://docs.ropensci.org/ckanr/reference/user_activity_list.md)
+  : Return a list of a user's activities
+
+- [`user_create()`](https://docs.ropensci.org/ckanr/reference/user_create.md)
+  : Create a user.
+
+- [`user_delete()`](https://docs.ropensci.org/ckanr/reference/user_delete.md)
+  : Delete a user.
+
+- [`user_invite()`](https://docs.ropensci.org/ckanr/reference/user_invite.md)
+  : Invite a user to a group
+
+- [`user_list()`](https://docs.ropensci.org/ckanr/reference/user_list.md)
+  : Return a list of the site's user accounts.
+
+- [`user_show()`](https://docs.ropensci.org/ckanr/reference/user_show.md)
+  : Show a user.
+
+- [`vocabulary_list()`](https://docs.ropensci.org/ckanr/reference/vocabulary.md)
+  [`vocabulary_show()`](https://docs.ropensci.org/ckanr/reference/vocabulary.md)
+  [`vocabulary_create()`](https://docs.ropensci.org/ckanr/reference/vocabulary.md)
+  [`vocabulary_update()`](https://docs.ropensci.org/ckanr/reference/vocabulary.md)
+  [`vocabulary_delete()`](https://docs.ropensci.org/ckanr/reference/vocabulary.md)
+  : Manage CKAN vocabularies.
+
+# Articles
+
+### All vignettes
+
+- [ckanr vignette](https://docs.ropensci.org/ckanr/articles/ckanr.md):

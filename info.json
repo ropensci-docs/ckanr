@@ -1,0 +1,13 @@
+{
+  "commit": {
+    "commit": "208b71c2a69876b94b3982918c4c675f27a37560",
+    "author": "Florian Mayer <florian.mayer@dpc.wa.gov.au>",
+    "time": "2025-12-10T08:07:21Z",
+    "files": 1,
+    "merge": false,
+    "message": "Fix #138\n\n* Update examples for ds_search_sql\n* Update examples for ds_search\n* Both use a datastore enabled CKAN (data.gov.au) version 2.11\n"
+  },
+  "repo": "https://github.com/ropensci/ckanr",
+  "pkg": "ckanr",
+  "time": "2026-08-30T07:46:56Z"
+}
