@@ -1,0 +1,13 @@
+{
+  "commit": {
+    "commit": "90d86fbaf07792f1e3385dad55a66c0c5710d4a2",
+    "author": "Florian Mayer <Florian.Mayer@eagleview.com>",
+    "time": "2026-09-22T08:10:39Z",
+    "files": 1,
+    "merge": false,
+    "message": "Use stable numeric data in the dplyr filter test\n\nAvoid random CKAN system fields and values that trigger internal errors\nin CKAN 2.11 DataStore SQL.\n"
+  },
+  "repo": "https://github.com/ropensci/ckanr",
+  "pkg": "ckanr",
+  "time": "2026-09-22T10:13:17Z"
+}
