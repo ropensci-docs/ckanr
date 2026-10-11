@@ -1,0 +1,13 @@
+{
+  "commit": {
+    "commit": "468ba8864a62a7f5e60911a1f48c4b80706cf99e",
+    "author": "Florian Mayer <Florian.Mayer@eagleview.com>",
+    "time": "2026-10-11T12:53:04Z",
+    "files": 2,
+    "merge": false,
+    "message": "Update contributing guide links and devcontainer lockfile\n"
+  },
+  "repo": "https://github.com/ropensci/ckanr",
+  "pkg": "ckanr",
+  "time": "2026-10-11T15:57:21Z"
+}
